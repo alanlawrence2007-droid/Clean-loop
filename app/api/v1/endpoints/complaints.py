@@ -126,6 +126,88 @@ async def get_complaint(
     return complaint
 
 
+@router.patch("/{complaint_id}", response_model=ComplaintResponse)
+async def update_complaint(
+    complaint_id: UUID,
+    complaint_update: ComplaintUpdate,
+    current_user: User = Depends(get_current_user),
+    db: AsyncSession = Depends(get_db),
+):
+    """Update complaint details (owner only while pending/acknowledged)."""
+    complaint = await ComplaintService.get_complaint_by_id(db, complaint_id)
+    if not complaint:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail="Complaint not found",
+        )
+
+    # Check ownership
+    if complaint.reporter_id != current_user.id:
+        raise HTTPException(
+            status_code=status.HTTP_403_FORBIDDEN,
+            detail="Not authorized to update this complaint",
+        )
+
+    # Only allow updates if complaint is pending or acknowledged
+    if complaint.status not in [ComplaintStatus.PENDING, ComplaintStatus.ACKNOWLEDGED]:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="Can only update complaints that are pending or acknowledged",
+        )
+
+    try:
+        # Update complaint fields
+        update_data = complaint_update.model_dump(exclude_unset=True)
+        for field, value in update_data.items():
+            setattr(complaint, field, value)
+
+        await db.commit()
+        await db.refresh(complaint)
+
+        # Reload with relationships
+        complaint = await ComplaintService.get_complaint_by_id(db, complaint.id)
+        return complaint
+
+    except Exception as e:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail=str(e),
+        )
+
+
+@router.delete("/{complaint_id}", status_code=status.HTTP_204_NO_CONTENT)
+async def delete_complaint(
+    complaint_id: UUID,
+    current_user: User = Depends(get_current_user),
+    db: AsyncSession = Depends(get_db),
+):
+    """Delete complaint (owner only while pending/acknowledged)."""
+    complaint = await ComplaintService.get_complaint_by_id(db, complaint_id)
+    if not complaint:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail="Complaint not found",
+        )
+
+    # Check ownership
+    if complaint.reporter_id != current_user.id:
+        raise HTTPException(
+            status_code=status.HTTP_403_FORBIDDEN,
+            detail="Not authorized to delete this complaint",
+        )
+
+    # Only allow deletion if complaint is pending or acknowledged
+    if complaint.status not in [ComplaintStatus.PENDING, ComplaintStatus.ACKNOWLEDGED]:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="Can only delete complaints that are pending or acknowledged",
+        )
+
+    await db.delete(complaint)
+    await db.commit()
+    return None
+
+
 @router.patch("/{complaint_id}/status", response_model=ComplaintResponse)
 async def update_complaint_status(
     complaint_id: UUID,
