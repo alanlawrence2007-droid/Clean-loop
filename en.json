@@ -1,0 +1,35 @@
+{
+  "app": { "name": "Clean-Loop", "tagline": "Sort it right." },
+  "lang": { "label": "Language", "en": "EN", "hi": "हिं", "mr": "मरा" },
+  "nav": { "label": "Main navigation", "home": "Home", "scan": "Scan", "map": "Map", "report": "Report", "myReports": "My reports" },
+  "admin": { "nav": "Admin navigation", "dashboard": "Dashboard", "complaints": "Complaints", "analytics": "Analytics" },
+  "category": { "wet": "Wet", "dry": "Dry", "ewaste": "E-waste", "hazardous": "Hazardous", "sanitary": "Sanitary", "reuse": "Reuse" },
+  "facility": { "verified": "Verified", "stale": "Out of date", "unverified": "Unverified" },
+  "ai": { "estimate": "AI estimate", "confidence": "Confidence" },
+  "demo": { "badge": "Demo data", "banner": "The Clean-Loop server isn't reachable. You are seeing demo data, not real rules or reports." },
+  "pages": {
+    "marketing": "Clean-Loop for cities",
+    "home": "Home",
+    "scan": "Scan an item",
+    "result": "Result",
+    "facilities": "Nearby points",
+    "collection": "Collection",
+    "report": "Report a problem",
+    "reports": "My reports",
+    "reportDetail": "Report tracking",
+    "try": "Try it live",
+    "admin": "Dashboard",
+    "comingStage": "Built in stage {{stage}}."
+  },
+  "errors": {
+    "unauthenticated": "Please sign in to continue.",
+    "forbidden": "You don't have access to this page.",
+    "validation": "Some details are missing or invalid. Check the form and try again.",
+    "rateLimited": "Too many requests. Try again in a moment.",
+    "unavailable": "This service is unavailable right now. Nothing was guessed or saved.",
+    "network": "No connection. Your report will be saved on this phone and sent later.",
+    "schema": "The server sent a response we couldn't read.",
+    "unknown": "Something went wrong. Try again."
+  },
+  "common": { "back": "Back", "loading": "Loading", "signIn": "Sign in", "goHome": "Go to home" }
+}

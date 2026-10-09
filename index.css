@@ -1,0 +1,13 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html { @apply bg-ground font-sans text-ink antialiased; }
+  h1, h2, h3 { @apply font-heading; }
+  :focus-visible { outline: 3px solid #10503F; outline-offset: 2px; }
+  .on-dark :focus-visible { outline-color: #C6F36B; }
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; scroll-behavior: auto !important; }
+  }
+}
