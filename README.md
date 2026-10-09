@@ -3,7 +3,7 @@
 [![Python 3.11+](https://img.shields.io/badge/python-3.11+-blue.svg)](https://www.python.org/downloads/)
 [![FastAPI](https://img.shields.io/badge/FastAPI-0.115-green.svg)](https://fastapi.tiangolo.com/)
 [![PostgreSQL](https://img.shields.io/badge/PostgreSQL-15+-blue.svg)](https://www.postgresql.org/)
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![License](https://img.shields.io/badge/License--yellow.svg)](https://opensource.org/licenses/)
 
 A production-ready backend for smart waste management with AI-powered classification, complaint tracking, facility discovery, and municipal analytics.
 
@@ -225,7 +225,7 @@ flake8 app/
 
 ## 📝 License
 
-This project is licensed under the MIT License - see the LICENSE file for details.
+This project is developed for hackathon purposes for now.
 
 ## 🤝 Contributing
 
