@@ -1,11 +1,6 @@
-# Clean Loop - AI-Assisted Smart Waste Management Platform
+# Clean Loop - Smart Waste Management Platform
 
-[![Python 3.11+](https://img.shields.io/badge/python-3.11+-blue.svg)](https://www.python.org/downloads/)
-[![FastAPI](https://img.shields.io/badge/FastAPI-0.115-green.svg)](https://fastapi.tiangolo.com/)
-[![PostgreSQL](https://img.shields.io/badge/PostgreSQL-15+-blue.svg)](https://www.postgresql.org/)
-[![License](https://img.shields.io/badge/License--yellow.svg)](https://opensource.org/licenses/)
-
-A production-ready backend for smart waste management with AI-powered classification, complaint tracking, facility discovery, and municipal analytics.
+An AI-assisted smart waste management platform for municipalities featuring waste classification, complaint tracking, facility discovery, and analytics dashboard.
 
 ## 🌟 Features
 
@@ -24,73 +19,55 @@ A production-ready backend for smart waste management with AI-powered classifica
 - PostgreSQL 15+ with PostGIS extension
 - pip or poetry for package management
 
-## 🚀 Quick Start
+## 🚀 Installation
 
-### 1. Clone and Setup
+1. **Clone the repository**
+   ```bash
+   git clone https://github.com/yourusername/clean-loop.git
+   cd clean-loop
+   ```
 
-```bash
-# Navigate to project directory
-cd clean-loop
+2. **Create virtual environment**
+   ```bash
+   python -m venv venv
+   source venv/bin/activate  # Linux/Mac
+   venv\Scripts\activate     # Windows
+   ```
 
-# Create virtual environment
-python -m venv venv
+3. **Install dependencies**
+   ```bash
+   pip install -r requirements.txt
+   ```
 
-# Activate virtual environment
-# Windows:
-venv\Scripts\activate
-# Linux/Mac:
-source venv/bin/activate
+4. **Set up environment variables**
+   ```bash
+   cp .env.example .env
+   # Edit .env with your configuration
+   ```
 
-# Install dependencies
-pip install -r requirements.txt
-```
+5. **Initialize database**
+   ```bash
+   # Create PostGIS extension in your PostgreSQL database
+   psql -U postgres -d cleanloop -c "CREATE EXTENSION IF NOT EXISTS postgis;"
+   
+   # Run migrations
+   alembic upgrade head
+   ```
 
-### 2. Database Setup
+6. **Load seed data (optional but recommended)**
+   ```bash
+   python scripts/seed_data.py
+   ```
 
-```bash
-# Create PostgreSQL database
-createdb cleanloop
+7. **Start the server**
+   ```bash
+   uvicorn app.main:app --reload
+   ```
 
-# Enable PostGIS extension (run in psql)
-psql -d cleanloop -c "CREATE EXTENSION IF NOT EXISTS postgis;"
-```
-
-### 3. Environment Configuration
-
-```bash
-# Copy environment template
-cp .env.example .env
-
-# Edit .env with your settings
-# Update DATABASE_URL, SECRET_KEY, etc.
-```
-
-### 4. Run Migrations
-
-```bash
-# Initialize Alembic (if not already done)
-alembic upgrade head
-```
-
-### 5. Seed Database
-
-```bash
-# Run seed script to populate initial data
-python scripts/seed_data.py
-```
-
-### 6. Run the Server
-
-```bash
-# Start development server
-uvicorn app.main:app --reload --host 0.0.0.0 --port 8000
-```
-
-### 7. Access the API
-
-- **API Documentation**: http://localhost:8000/docs
-- **ReDoc Documentation**: http://localhost:8000/redoc
-- **API Base URL**: http://localhost:8000/api/v1
+8. **Access the API**
+   - API Documentation: http://localhost:8000/docs
+   - ReDoc Documentation: http://localhost:8000/redoc
+   - API Base URL: http://localhost:8000/api/v1
 
 ## 📚 API Endpoints
 
@@ -136,7 +113,7 @@ uvicorn app.main:app --reload --host 0.0.0.0 --port 8000
 ## 👥 User Roles
 
 | Role | Permissions |
-|------|------------|
+|------|-------------|
 | **citizen** | Submit complaints, view facilities, track own complaints, submit feedback |
 | **municipal_staff** | All citizen permissions + update complaint status, view all complaints, access analytics |
 | **admin** | Full system access |
@@ -154,7 +131,6 @@ After running the seed script:
 ## 🗄️ Database Schema
 
 ### Core Tables
-
 - **users** - User accounts with role-based access
 - **waste_categories** - Waste classification categories
 - **disposal_rules** - Locality-specific disposal guidelines
@@ -166,7 +142,6 @@ After running the seed script:
 ## 🛠️ Development
 
 ### Project Structure
-
 ```
 app/
 ├── main.py              # FastAPI application
@@ -184,14 +159,12 @@ app/
 ```
 
 ### Running Tests
-
 ```bash
 # Run tests (when implemented)
 pytest tests/ -v
 ```
 
 ### Code Quality
-
 ```bash
 # Format code
 black app/
@@ -217,28 +190,23 @@ flake8 app/
 
 | Variable | Description | Default |
 |----------|-------------|---------|
-| `DATABASE_URL` | Async PostgreSQL connection string | `postgresql+asyncpg://...` |
-| `SECRET_KEY` | JWT secret key | *Required* |
-| `ALGORITHM` | JWT algorithm | `HS256` |
-| `ACCESS_TOKEN_EXPIRE_MINUTES` | Token expiry | `30` |
-| `CORS_ORIGINS` | Allowed origins | `["http://localhost:3000"]` |
+| DATABASE_URL | Async PostgreSQL connection string | `postgresql+asyncpg://user:password@localhost/dbname` |
+| SECRET_KEY | JWT secret key | Required |
+| ALGORITHM | JWT algorithm | HS256 |
+| ACCESS_TOKEN_EXPIRE_MINUTES | Token expiry | 30 |
+| CORS_ORIGINS | Allowed origins | `["http://localhost:3000"]` |
+| SUPABASE_URL | Supabase project URL | Optional |
+| SUPABASE_KEY | Supabase anon key | Optional |
+| SUPABASE_SERVICE_KEY | Supabase service role key | Optional |
+| SUPABASE_JWT_SECRET | Supabase JWT secret | Optional |
+| STORAGE_BUCKET | Supabase storage bucket | `complaint-images` |
 
-## 📝 License
+## 📄 License
 
-This project is developed for hackathon purposes for now.
+MIT License - see [LICENSE](LICENSE) file for details.
 
-## 🤝 Contributing
+## 👏 Acknowledgments
 
-1. Fork the repository
-2. Create a feature branch
-3. Commit your changes
-4. Push to the branch
-5. Open a Pull Request
-
-## 📞 Support
-
-For issues and questions, please open an issue on GitHub.
-
----
-
-Built with ❤️ for cleaner cities and smarter waste management.
+- Built with FastAPI and modern Python practices
+- Inspired by smart city initiatives worldwide
+- Special thanks to open-source community contributions
